@@ -94,28 +94,36 @@
   .dcard h4{font-size:14.5px; margin-bottom:5px;}
   .dcard p{font-size:12px; color:var(--ink-soft);}
 
-  /* roles cascade mini */
+  /* roles cascade */
   .cascade-mini{
     position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:6px 0 6px;
   }
   .cascade-mini::before{
-    content:""; position:absolute; top:22px; left:10%; right:10%; height:2px;
+    content:""; position:absolute; top:30px; left:10%; right:10%; height:2px;
     background:repeating-linear-gradient(to right, var(--line) 0 6px, transparent 6px 11px); z-index:0;
   }
-  .cmini{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px;}
+  .cmini{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px;}
   .cmini .circ{
-    width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    font-family:'Poppins'; font-weight:700; font-size:14px; color:#fff; box-shadow:var(--shadow);
+    width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins'; font-weight:700; font-size:18px; color:#fff; box-shadow:var(--shadow);
   }
   .cmini:nth-child(1) .circ{background:var(--navy);}
   .cmini:nth-child(2) .circ{background:var(--olive-deep);}
   .cmini:nth-child(3) .circ{background:var(--olive);}
   .cmini:nth-child(4) .circ{background:var(--sky);}
-  .cmini .cname{font-size:11px; font-weight:700;}
-  .cmini .csub{font-size:9.5px; color:var(--ink-soft); line-height:1.25;}
+  .cmini .cname{font-size:13px; font-weight:700;}
+  .cmini .csub{font-size:11.5px; color:var(--ink-soft); line-height:1.3;}
+
+  /* role detail cards */
+  .role-grid-mini{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:20px 0 6px;}
+  .role-mini-card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 15px; box-shadow:var(--shadow);}
+  .role-mini-card .rtag{font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:6px;}
+  .role-mini-card h5{font-family:'Poppins'; font-size:14px; margin-bottom:8px; color:var(--ink);}
+  .role-mini-card p{font-size:12px; color:var(--ink-soft); margin-bottom:10px;}
+  .role-mini-card .obj{font-size:11px; font-weight:700; color:var(--sky-deep); padding-top:8px; border-top:1px dashed var(--line);}
 
   /* fases mini */
-  .fases-mini{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px;}
+  .fases-mini{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:20px;}
   .fmini{background:var(--paper-deep); border-radius:12px; padding:13px 14px;}
   .fmini .fnum{font-family:'Poppins'; font-size:12px; font-weight:700; color:var(--olive-deep); margin-bottom:4px;}
   .fmini h4{font-size:13.5px; margin-bottom:4px;}
@@ -131,6 +139,10 @@
   .pillars-mini{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
   .ptag{
     background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18); border-radius:20px;
+    padding:6px 12px; font-size:11.5px; font-weight:600;
+  }
+  .ptag-light{
+    background:var(--paper-deep); border:1px solid var(--line); color:var(--ink); border-radius:20px;
     padding:6px 12px; font-size:11.5px; font-weight:600;
   }
   .pflow{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;}
@@ -166,6 +178,7 @@
     .grid2{grid-template-columns:1fr;}
     .dual-mini{grid-template-columns:1fr;}
     .cascade-mini{grid-template-columns:repeat(2,1fr); gap:16px;}
+    .role-grid-mini{grid-template-columns:1fr 1fr;}
     .fases-mini{grid-template-columns:1fr;}
     .pflow{grid-template-columns:1fr;}
     .road-mini{flex-direction:column;}
@@ -228,13 +241,40 @@
   </div>
 
   <div class="panel" style="margin-bottom:18px;">
-    <div class="panel-title">Metodología de reentrenamiento</div>
+    <div class="panel-title">El cómo</div>
     <h3>Roles y fases de certificación</h3>
+    <p style="font-size:12.8px; color:var(--ink-soft); margin-bottom:16px;">La idea general: <b>Key Users expertos por área y proceso</b> forman a grupos pequeños directamente en las tiendas que tienen asignadas, y certifican que cada colaborador realmente lo ejecuta — no solo que lo escuchó.</p>
     <div class="cascade-mini">
       <div class="cmini"><div class="circ">C</div><div class="cname">Capacitación</div><div class="csub">diseño y pedagogía</div></div>
       <div class="cmini"><div class="circ">SK</div><div class="cname">Super Key User</div><div class="csub">GA o experto en el proceso</div></div>
       <div class="cmini"><div class="circ">KU</div><div class="cname">Key User de Zona</div><div class="csub">3 supervisores por área</div></div>
       <div class="cmini"><div class="circ">👤</div><div class="cname">Colaborador</div><div class="csub">plantilla de cada tienda</div></div>
+    </div>
+    <div class="role-grid-mini">
+      <div class="role-mini-card">
+        <div class="rtag">Diseño</div>
+        <h5>Capacitación</h5>
+        <p>Prioriza procesos junto a Auditoría y Operaciones, construye el kit de sesión y evaluación, y forma en pedagogía a los Key Users de Zona.</p>
+        <div class="obj">Objetivo: que el sistema exista y se sostenga en el tiempo.</div>
+      </div>
+      <div class="role-mini-card">
+        <div class="rtag">Dueño del proceso</div>
+        <h5>Super Key User</h5>
+        <p>Experto real del proceso crítico. Certifica el contenido y enseña el proceso a fondo a los Key Users de Zona, junto con los errores más comunes vistos en campo.</p>
+        <div class="obj">Objetivo: que el contenido sea 100% fiel al proceso real.</div>
+      </div>
+      <div class="role-mini-card">
+        <div class="rtag">Formación</div>
+        <h5>Key User de Zona</h5>
+        <p>Va físicamente a sus tiendas asignadas (≈3). Dicta microsesiones por turno, aplica la evaluación práctica y certifica al colaborador in situ.</p>
+        <div class="obj">Objetivo: instalar la habilidad, no solo transmitir información.</div>
+      </div>
+      <div class="role-mini-card">
+        <div class="rtag">Ejecución</div>
+        <h5>Colaborador</h5>
+        <p>Recibe la formación presencial, se certifica con evaluación teórica y práctica, y recibe refuerzo espaciado vía Academia Farmatodo.</p>
+        <div class="obj">Objetivo: ejecutar el proceso correctamente, no solo aprobarlo.</div>
+      </div>
     </div>
     <div class="fases-mini">
       <div class="fmini">
