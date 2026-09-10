@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resumen ejecutivo · Reentrenamiento en procesos críticos</title>
+<title>Resumen ejecutivo · Certificación en procesos críticos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -96,26 +96,27 @@
 
   /* roles cascade */
   .cascade-mini{
-    position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:6px 0 6px;
+    position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin:6px 0 6px;
   }
   .cascade-mini::before{
-    content:""; position:absolute; top:30px; left:10%; right:10%; height:2px;
+    content:""; position:absolute; top:30px; left:8%; right:8%; height:2px;
     background:repeating-linear-gradient(to right, var(--line) 0 6px, transparent 6px 11px); z-index:0;
   }
   .cmini{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px;}
   .cmini .circ{
-    width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    font-family:'Poppins'; font-weight:700; font-size:18px; color:#fff; box-shadow:var(--shadow);
+    width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins'; font-weight:700; font-size:16px; color:#fff; box-shadow:var(--shadow);
   }
   .cmini:nth-child(1) .circ{background:var(--navy);}
   .cmini:nth-child(2) .circ{background:var(--olive-deep);}
   .cmini:nth-child(3) .circ{background:var(--olive);}
-  .cmini:nth-child(4) .circ{background:var(--sky);}
-  .cmini .cname{font-size:13px; font-weight:700;}
-  .cmini .csub{font-size:11.5px; color:var(--ink-soft); line-height:1.3;}
+  .cmini:nth-child(4) .circ{background:var(--sky-deep);}
+  .cmini:nth-child(5) .circ{background:var(--sky);}
+  .cmini .cname{font-size:12px; font-weight:700;}
+  .cmini .csub{font-size:10.5px; color:var(--ink-soft); line-height:1.3;}
 
   /* role detail cards */
-  .role-grid-mini{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:20px 0 6px;}
+  .role-grid-mini{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:20px 0 6px;}
   .role-mini-card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 15px; box-shadow:var(--shadow);}
   .role-mini-card .rtag{font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:6px;}
   .role-mini-card h5{font-family:'Poppins'; font-size:14px; margin-bottom:8px; color:var(--ink);}
@@ -123,7 +124,7 @@
   .role-mini-card .obj{font-size:11px; font-weight:700; color:var(--sky-deep); padding-top:8px; border-top:1px dashed var(--line);}
 
   /* fases mini */
-  .fases-mini{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:20px;}
+  .fases-mini{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:20px;}
   .fmini{background:var(--paper-deep); border-radius:12px; padding:13px 14px;}
   .fmini .fnum{font-family:'Poppins'; font-size:12px; font-weight:700; color:var(--olive-deep); margin-bottom:4px;}
   .fmini h4{font-size:13.5px; margin-bottom:4px;}
@@ -185,6 +186,73 @@
     .rmini::after{display:none;}
     h1.title{font-size:26px;}
   }
+
+  /* ---------- TABS ---------- */
+  .tabbar{
+    display:flex; gap:4px; background:#fff; border-bottom:1px solid var(--line);
+    padding:0 40px;
+  }
+  .tab-btn{
+    appearance:none; border:none; background:none; cursor:pointer;
+    padding:12px 16px; font-family:'Public Sans', sans-serif; font-weight:700; font-size:12px;
+    color:var(--ink-soft); border-bottom:3px solid transparent; transition:color .2s, border-color .2s;
+  }
+  .tab-btn:hover{color:var(--navy);}
+  .tab-btn.active{color:var(--navy); border-bottom-color:var(--olive-deep);}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ---------- CALCULADORA ---------- */
+  .calc-layout{display:grid; grid-template-columns:300px 1fr; gap:18px; align-items:start;}
+  .calc-inputs{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:20px 22px; box-shadow:var(--shadow); position:sticky; top:14px;
+  }
+  .calc-inputs h3{font-size:14px; margin-bottom:14px;}
+  .calc-field{margin-bottom:14px;}
+  .calc-field label{display:flex; justify-content:space-between; align-items:baseline; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:6px;}
+  .calc-field .calc-val{font-family:'Poppins'; color:var(--olive-deep); font-size:12.5px;}
+  .calc-field input[type=range]{width:100%; accent-color:var(--olive-deep);}
+  .calc-field .calc-hint{font-size:10px; color:var(--ink-soft); margin-top:4px;}
+  .calc-field-num{margin-bottom:14px;}
+  .calc-field-num label{display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:6px;}
+  .calc-field-num input[type=number]{
+    width:100%; padding:8px 11px; border:1px solid var(--line); border-radius:8px;
+    font-family:'Public Sans'; font-size:12.5px; color:var(--ink); background:var(--paper);
+  }
+  .calc-reset-btn{
+    width:100%; padding:9px; border-radius:8px; border:1px solid var(--line); background:var(--paper-deep);
+    font-size:11px; font-weight:700; color:var(--ink-soft); cursor:pointer; margin-top:4px;
+  }
+  .calc-results{display:flex; flex-direction:column; gap:14px;}
+  .calc-stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  .calc-stat-card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow);}
+  .calc-st-label{font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:8px;}
+  .calc-st-num{font-family:'Poppins'; font-size:22px; font-weight:700; color:var(--navy); display:flex; align-items:baseline; gap:5px;}
+  .calc-st-num small{font-size:11px; font-weight:600; color:var(--ink-soft);}
+  .calc-st-sub{font-size:10.5px; color:var(--ink-soft); margin-top:6px;}
+  .calc-big-panel{background:var(--navy); border-radius:16px; padding:22px 24px; color:#EAF1F7;}
+  .calc-big-panel h3{color:#fff; font-size:14px; margin-bottom:12px;}
+  .calc-big-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+  .calc-big-stat{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:14px 16px;}
+  .calc-bs-label{font-size:10px; font-weight:700; color:#9FD0E8; text-transform:uppercase; margin-bottom:8px;}
+  .calc-bs-num{font-family:'Poppins'; font-size:20px; font-weight:700; color:#fff;}
+  .calc-bs-sub{font-size:10.5px; color:#C9DBE7; margin-top:6px;}
+  .calc-breakdown{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow);}
+  .calc-breakdown h3{font-size:13.5px; margin-bottom:10px;}
+  .calc-bd-table{width:100%; border-collapse:collapse; font-size:12px;}
+  .calc-bd-table th{text-align:left; padding:7px 9px; font-size:9.5px; font-weight:700; text-transform:uppercase; color:var(--ink-soft); border-bottom:1px solid var(--line);}
+  .calc-bd-table td{padding:8px 9px; border-bottom:1px solid var(--line); color:var(--ink);}
+  .calc-bd-table tr:last-child td{border-bottom:none; font-weight:700; background:var(--paper-deep);}
+  .calc-note{font-size:10.5px; color:var(--ink-soft); background:var(--paper-deep); border-radius:10px; padding:10px 13px; margin-top:10px;}
+  .calc-note b{color:var(--ink);}
+
+  @media (max-width:900px){
+    .calc-layout{grid-template-columns:1fr;}
+    .calc-stat-row{grid-template-columns:1fr;}
+    .calc-big-grid{grid-template-columns:1fr;}
+    .calc-inputs{position:static;}
+  }
 </style>
 </head>
 <body>
@@ -197,11 +265,18 @@
   </div>
 </div>
 
+<div class="tabbar">
+  <button class="tab-btn active" id="btn-resumen" onclick="showTab('resumen')">Propuesta de certificación</button>
+  <button class="tab-btn" id="btn-calculadora" onclick="showTab('calculadora')">Calculadora de tiempo</button>
+</div>
+
+<div id="view-resumen" class="view active">
+
 <div class="wrap">
 
   <div class="hero">
     <div class="eyebrow"><span class="rule"></span> PROPUESTA · ESCUELA DE EXCELENCIA</div>
-    <h1 class="title">Reentrenamiento en procesos críticos de la operación</h1>
+    <h1 class="title">Certificación en procesos críticos de la operación</h1>
     <p class="obj-line"><b>Objetivo:</b> garantizar el dominio de los procesos de la operación por parte de los colaboradores. Sumamos reentrenamiento presencial en tienda al refuerzo asíncrono que ya existe en Academia Farmatodo.</p>
   </div>
 
@@ -246,8 +321,9 @@
     <div class="cascade-mini">
       <div class="cmini"><div class="circ">C</div><div class="cname">Capacitación</div><div class="csub">diseño y pedagogía</div></div>
       <div class="cmini"><div class="circ">SK</div><div class="cname">Super Key User</div><div class="csub">GA o experto en el proceso</div></div>
-      <div class="cmini"><div class="circ">KU</div><div class="cname">Key User de Zona</div><div class="csub">3 supervisores por área</div></div>
-      <div class="cmini"><div class="circ">👤</div><div class="cname">Colaborador</div><div class="csub">plantilla de cada tienda</div></div>
+      <div class="cmini"><div class="circ">KU</div><div class="cname">Key User de Zona</div><div class="csub"><span id="sync-gtPorKU">3</span> GT por área</div></div>
+      <div class="cmini"><div class="circ">GT</div><div class="cname">Gerente de Tienda</div><div class="csub">certificado, 1 por tienda</div></div>
+      <div class="cmini"><div class="circ">👤</div><div class="cname">Colaborador</div><div class="csub">formado por su GT</div></div>
     </div>
     <div class="role-grid-mini">
       <div class="role-mini-card">
@@ -265,13 +341,19 @@
       <div class="role-mini-card">
         <div class="rtag">Formación</div>
         <h5>Key User de Zona</h5>
-        <p>Va físicamente a sus tiendas asignadas (≈3). Dicta microsesiones por turno, aplica la evaluación práctica y certifica al colaborador in situ.</p>
-        <div class="obj">Objetivo: instalar la habilidad, no solo transmitir información.</div>
+        <p>Va físicamente a sus tiendas asignadas (≈3). Certifica de forma individual a cada Gerente de Tienda, con evaluación teórica y práctica.</p>
+        <div class="obj">Objetivo: instalar la habilidad en quien puede sostenerla.</div>
+      </div>
+      <div class="role-mini-card">
+        <div class="rtag">Multiplicación</div>
+        <h5>Gerente de Tienda</h5>
+        <p>Ya certificado por el Key User, baja la formación al resto de su equipo y responde por su ejecución correcta.</p>
+        <div class="obj">Objetivo: que la formación sea sostenible, no dependiente de una visita.</div>
       </div>
       <div class="role-mini-card">
         <div class="rtag">Ejecución</div>
         <h5>Colaborador</h5>
-        <p>Recibe la formación presencial, se certifica con evaluación teórica y práctica, y recibe refuerzo espaciado vía Academia Farmatodo.</p>
+        <p>Recibe la formación de su GT, se certifica con evaluación teórica y práctica, y recibe refuerzo espaciado vía Academia Farmatodo.</p>
         <div class="obj">Objetivo: ejecutar el proceso correctamente, no solo aprobarlo.</div>
       </div>
     </div>
@@ -283,15 +365,21 @@
         <div class="fcert">✔ Teórica</div>
       </div>
       <div class="fmini">
-        <div class="fnum">02 · Despliegue</div>
-        <h4>Formación en tienda</h4>
-        <p>2–3 días por tienda, microgrupos por turno.</p>
+        <div class="fnum">02 · Certificación GT</div>
+        <h4>KU certifica al Gerente de Tienda</h4>
+        <p>Individual por GT: ≈<span id="sync-teorica">18</span> min teórica + ≈<span id="sync-practica">38</span> min práctica, por proceso.</p>
         <div class="fcert">✔ Teórica · ✔ Práctica</div>
       </div>
       <div class="fmini">
-        <div class="fnum">03 · Sostenimiento</div>
+        <div class="fnum">03 · Cascada interna</div>
+        <h4>GT forma a su equipo</h4>
+        <p>Microgrupos, dentro del ritmo normal de la tienda.</p>
+        <div class="fcert">✔ Teórica · ✔ Práctica</div>
+      </div>
+      <div class="fmini">
+        <div class="fnum">04 · Sostenimiento</div>
         <h4>Refuerzo espaciado</h4>
-        <p>Píldoras + observación del supervisor de tienda.</p>
+        <p>Píldoras + dashboard de seguimiento por movimientos de GT.</p>
         <div class="fcert">✔ Teórica · ✔ Práctica</div>
       </div>
     </div>
@@ -329,7 +417,207 @@
 
 </div>
 
+</div>
+
+<div id="view-calculadora" class="view">
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow"><span class="rule"></span> PARA PRESENTAR A OPERACIONES</div>
+    <h1 class="title">¿Cuánto tiempo real implica este modelo?</h1>
+    <p class="obj-line">Ajusta los supuestos con tus números reales — se recalcula al instante y también actualiza los tiempos que se muestran en la pestaña "Propuesta de certificación".</p>
+  </div>
+
+  <div class="calc-layout">
+    <div class="calc-inputs">
+      <h3>Supuestos</h3>
+
+      <div class="calc-field">
+        <label>Tiempo teórica por proceso <span class="calc-val" id="v-teorica">18 min</span></label>
+        <input type="range" id="in-teorica" min="5" max="60" value="18">
+        <div class="calc-hint">Certificación individual, no grupal.</div>
+      </div>
+
+      <div class="calc-field">
+        <label>Tiempo práctica por proceso <span class="calc-val" id="v-practica">38 min</span></label>
+        <input type="range" id="in-practica" min="10" max="120" value="38">
+        <div class="calc-hint">Observación en tienda, individual.</div>
+      </div>
+
+      <div class="calc-field-num">
+        <label>Número de procesos a certificar</label>
+        <input type="number" id="in-procesos" value="5" min="1" max="50">
+      </div>
+
+      <div class="calc-field-num">
+        <label>GT asignados por Key User</label>
+        <input type="number" id="in-gtPorKU" value="3" min="1" max="10">
+      </div>
+
+      <div class="calc-field-num">
+        <label>Total de Key Users de Zona</label>
+        <input type="number" id="in-totalKU" value="78" min="1" max="500">
+      </div>
+
+      <div class="calc-field-num">
+        <label>Total de tiendas / GT en la organización</label>
+        <input type="number" id="in-totalGT" value="300" min="1" max="2000">
+      </div>
+
+      <button class="calc-reset-btn" onclick="resetCalcDefaults()">Restablecer valores confirmados</button>
+    </div>
+
+    <div class="calc-results">
+      <div class="calc-stat-row">
+        <div class="calc-stat-card">
+          <div class="calc-st-label">Por proceso, por GT</div>
+          <div class="calc-st-num" id="out-porGTproceso">–<small>min</small></div>
+          <div class="calc-st-sub">Teórica + práctica, una sola vez</div>
+        </div>
+        <div class="calc-stat-card">
+          <div class="calc-st-label">Por GT, todos los procesos</div>
+          <div class="calc-st-num" id="out-porGTtotal">–<small>h</small></div>
+          <div class="calc-st-sub">Tiempo total que invierte 1 GT</div>
+        </div>
+        <div class="calc-stat-card">
+          <div class="calc-st-label">Por Key User, todos sus GT</div>
+          <div class="calc-st-num" id="out-porKUtotal">–<small>h</small></div>
+          <div class="calc-st-sub">Para certificar a sus ≈<span id="out-gtPorKUlabel">3</span> GT en todos los procesos</div>
+        </div>
+      </div>
+
+      <div class="calc-big-panel">
+        <h3>Impacto a nivel organización</h3>
+        <div class="calc-big-grid">
+          <div class="calc-big-stat">
+            <div class="calc-bs-label">Horas totales · lado Key User</div>
+            <div class="calc-bs-num" id="out-orgKU">–</div>
+            <div class="calc-bs-sub">Suma de todos los Key Users certificando a sus GT</div>
+          </div>
+          <div class="calc-big-stat">
+            <div class="calc-bs-label">Horas totales · lado GT</div>
+            <div class="calc-bs-num" id="out-orgGT">–</div>
+            <div class="calc-bs-sub">Suma de todos los GT siendo certificados</div>
+          </div>
+          <div class="calc-big-stat">
+            <div class="calc-bs-label">Equivalente en jornadas de 8h</div>
+            <div class="calc-bs-num" id="out-jornadasKU">–</div>
+            <div class="calc-bs-sub">Jornadas de trabajo de Key Users, en total</div>
+          </div>
+          <div class="calc-big-stat">
+            <div class="calc-bs-label">Tiempo por GT / jornada de 8h</div>
+            <div class="calc-bs-num" id="out-fraccionGT">–</div>
+            <div class="calc-bs-sub">Qué fracción de un día ocupa en el GT</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-breakdown">
+        <h3>Desglose por proceso (para 1 GT)</h3>
+        <table class="calc-bd-table">
+          <thead><tr><th>Concepto</th><th>Minutos</th><th>Horas</th></tr></thead>
+          <tbody>
+            <tr><td>Certificación teórica</td><td id="bd-teorica">–</td><td id="bd-teoricaH">–</td></tr>
+            <tr><td>Certificación práctica</td><td id="bd-practica">–</td><td id="bd-practicaH">–</td></tr>
+            <tr><td>Total por proceso</td><td id="bd-total">–</td><td id="bd-totalH">–</td></tr>
+          </tbody>
+        </table>
+        <div class="calc-note">
+          <b>Nota:</b> estos números cubren solo la certificación del GT por parte del Key User. No incluyen el tiempo que el GT invierte después en formar a su propio equipo, que depende del tamaño de cada tienda.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
 <footer>Escuela de Excelencia · Resumen ejecutivo · Preparado por Capacitación</footer>
+
+<script>
+  function showTab(name){
+    document.getElementById('view-resumen').classList.toggle('active', name==='resumen');
+    document.getElementById('view-calculadora').classList.toggle('active', name==='calculadora');
+    document.getElementById('btn-resumen').classList.toggle('active', name==='resumen');
+    document.getElementById('btn-calculadora').classList.toggle('active', name==='calculadora');
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+
+  const calcEls = {
+    teorica: document.getElementById('in-teorica'),
+    practica: document.getElementById('in-practica'),
+    procesos: document.getElementById('in-procesos'),
+    gtPorKU: document.getElementById('in-gtPorKU'),
+    totalKU: document.getElementById('in-totalKU'),
+    totalGT: document.getElementById('in-totalGT'),
+  };
+
+  function calcFmtH(mins){
+    const h = mins/60;
+    return h.toFixed(1).replace(/\.0$/,'');
+  }
+  function calcFmtNum(n){
+    return Math.round(n).toLocaleString('es-ES');
+  }
+
+  function runCalc(){
+    const teorica = parseFloat(calcEls.teorica.value);
+    const practica = parseFloat(calcEls.practica.value);
+    const procesos = parseFloat(calcEls.procesos.value) || 0;
+    const gtPorKU = parseFloat(calcEls.gtPorKU.value) || 0;
+    const totalKU = parseFloat(calcEls.totalKU.value) || 0;
+    const totalGT = parseFloat(calcEls.totalGT.value) || 0;
+
+    document.getElementById('v-teorica').textContent = teorica + ' min';
+    document.getElementById('v-practica').textContent = practica + ' min';
+
+    const porProceso = teorica + practica;
+    const porGTtotal = porProceso * procesos;
+    const porKUproceso = porProceso * gtPorKU;
+    const porKUtotal = porKUproceso * procesos;
+
+    const orgKUmin = porKUtotal * totalKU;
+    const orgGTmin = porGTtotal * totalGT;
+
+    document.getElementById('out-porGTproceso').innerHTML = calcFmtNum(porProceso) + '<small>min</small>';
+    document.getElementById('out-porGTtotal').innerHTML = calcFmtH(porGTtotal) + '<small>h</small>';
+    document.getElementById('out-porKUtotal').innerHTML = calcFmtH(porKUtotal) + '<small>h</small>';
+    document.getElementById('out-gtPorKUlabel').textContent = calcFmtNum(gtPorKU);
+
+    document.getElementById('out-orgKU').textContent = calcFmtNum(orgKUmin/60) + ' h';
+    document.getElementById('out-orgGT').textContent = calcFmtNum(orgGTmin/60) + ' h';
+    document.getElementById('out-jornadasKU').textContent = calcFmtNum(orgKUmin/60/8) + ' jornadas';
+    document.getElementById('out-fraccionGT').textContent = ((porGTtotal/60/8)*100).toFixed(0) + '% de 1 día';
+
+    document.getElementById('bd-teorica').textContent = calcFmtNum(teorica);
+    document.getElementById('bd-teoricaH').textContent = calcFmtH(teorica) + ' h';
+    document.getElementById('bd-practica').textContent = calcFmtNum(practica);
+    document.getElementById('bd-practicaH').textContent = calcFmtH(practica) + ' h';
+    document.getElementById('bd-total').textContent = calcFmtNum(porProceso);
+    document.getElementById('bd-totalH').textContent = calcFmtH(porProceso) + ' h';
+
+    /* Sincroniza con la pestaña "Propuesta de certificación" */
+    const syncTeorica = document.getElementById('sync-teorica');
+    const syncPractica = document.getElementById('sync-practica');
+    const syncGT = document.getElementById('sync-gtPorKU');
+    if (syncTeorica) syncTeorica.textContent = calcFmtNum(teorica);
+    if (syncPractica) syncPractica.textContent = calcFmtNum(practica);
+    if (syncGT) syncGT.textContent = calcFmtNum(gtPorKU);
+  }
+
+  function resetCalcDefaults(){
+    calcEls.teorica.value = 18;
+    calcEls.practica.value = 38;
+    calcEls.procesos.value = 5;
+    calcEls.gtPorKU.value = 3;
+    calcEls.totalKU.value = 78;
+    calcEls.totalGT.value = 300;
+    runCalc();
+  }
+
+  Object.values(calcEls).forEach(el => el.addEventListener('input', runCalc));
+  runCalc();
+</script>
 
 </body>
 </html>
