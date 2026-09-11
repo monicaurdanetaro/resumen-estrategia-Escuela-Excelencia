@@ -260,12 +260,6 @@
     .calc-inputs{position:static;}
   }
   /* ---------- DASHBOARD DE SEGUIMIENTO ---------- */
-  .seg-note{
-    font-size:11.5px; color:var(--ink-soft); background:var(--paper-deep); border:1px dashed var(--line);
-    border-radius:12px; padding:12px 16px; margin-bottom:18px;
-  }
-  .seg-note b{color:var(--ink);}
-
   .seg-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px;}
   .seg-stat{
     background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow);
@@ -274,11 +268,15 @@
   .seg-stat-num{font-family:'Poppins', sans-serif; font-size:22px; font-weight:700; color:var(--navy);}
   .seg-stat-alert .seg-stat-num{color:#9C2B34;}
 
-  .seg-controls{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:16px;}
+  .seg-controls{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:12px;}
+  .seg-filters{
+    display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:16px;
+    background:var(--paper-deep); border:1px solid var(--line); border-radius:14px; padding:14px 16px;
+  }
   .seg-field label{display:block; font-size:11px; font-weight:700; color:var(--ink); margin-bottom:6px;}
-  .seg-field select{
+  .seg-field select, .seg-field input[type=text]{
     padding:8px 11px; border:1px solid var(--line); border-radius:8px; font-family:'Public Sans';
-    font-size:12.5px; color:var(--ink); background:var(--card); min-width:220px;
+    font-size:12.5px; color:var(--ink); background:var(--card); min-width:180px;
   }
   .seg-btn-sim{
     padding:9px 14px; border-radius:8px; border:none; background:var(--olive-deep); color:#fff;
@@ -286,16 +284,12 @@
   }
   .seg-btn-sim:hover{background:var(--navy);}
   .seg-btn-reset{
-    padding:9px 14px; border-radius:8px; border:1px solid var(--line); background:var(--paper-deep);
+    padding:9px 14px; border-radius:8px; border:1px solid var(--line); background:var(--card);
     font-size:11.5px; font-weight:700; color:var(--ink-soft); cursor:pointer;
   }
 
-  .seg-alert{
-    display:flex; gap:10px; align-items:flex-start;
-    background:#FBEAEA; border:1px solid #F0C4C4; border-radius:12px; padding:12px 14px; margin-bottom:8px;
-    animation: segFlash .6s ease;
-  }
-  @keyframes segFlash{ from{ background:#F7D3D3; } to{ background:#FBEAEA; } }
+  .seg-alert-flash{ animation: segFlash .6s ease; }
+  @keyframes segFlash{ from{ background:#F7D3D3; } to{ background:transparent; } }
   .seg-alert-ico{
     width:22px; height:22px; border-radius:50%; background:#9C2B34; color:#fff; flex-shrink:0;
     display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700;
@@ -337,6 +331,8 @@
 
   @media (max-width: 900px){
     .seg-stats{grid-template-columns:repeat(2,1fr);}
+    .seg-filters{flex-direction:column; align-items:stretch;}
+    .seg-field select, .seg-field input[type=text]{min-width:auto; width:100%;}
     .seg-table-wrap{overflow-x:auto;}
     .seg-table{min-width:600px;}
   }
@@ -617,13 +613,9 @@
 <div class="wrap">
 
   <div class="hero">
-    <div class="eyebrow"><span class="rule"></span> SIMULACIÓN</div>
+    <div class="eyebrow"><span class="rule"></span> SEGUIMIENTO</div>
     <h1 class="title">Dashboard de seguimiento y alertas</h1>
-    <p class="obj-line">Así se vería el instrumento que cruza certificaciones con nómina: cobertura por tienda y proceso, y alertas automáticas cuando un movimiento de personal deja una tienda descubierta.</p>
-  </div>
-
-  <div class="seg-note">
-    <b>Nota:</b> los datos son simulados. En producción se alimentaría automáticamente del formulario de certificación que llena el Key User — aún no existe, esto muestra cómo funcionaría.
+    <p class="obj-line">Cruza certificaciones con nómina: cobertura por tienda y proceso, y alertas automáticas cuando un movimiento de personal deja una tienda descubierta.</p>
   </div>
 
   <div class="seg-stats">
@@ -654,7 +646,25 @@
     <button class="seg-btn-reset" onclick="resetSeguimiento()">Restablecer simulación</button>
   </div>
 
-  <div id="seg-alerts-wrap"></div>
+  <div class="seg-filters">
+    <div class="seg-field">
+      <label>Tienda</label>
+      <input type="text" id="seg-f-tienda" placeholder="Buscar tienda...">
+    </div>
+    <div class="seg-field">
+      <label>Área</label>
+      <select id="seg-f-area"><option value="">Todas</option></select>
+    </div>
+    <div class="seg-field">
+      <label>Key User (nombre o cédula)</label>
+      <input type="text" id="seg-f-ku" placeholder="Buscar Key User...">
+    </div>
+    <div class="seg-field">
+      <label>Supervisor (nombre o cédula)</label>
+      <input type="text" id="seg-f-sup" placeholder="Buscar supervisor...">
+    </div>
+    <button class="seg-btn-reset" onclick="segClearFilters()">Limpiar filtros</button>
+  </div>
 
   <div class="seg-table-wrap">
     <table class="seg-table">
@@ -778,82 +788,110 @@
   ];
 
   const SEG_INITIAL = [
-    { ku:'María Fernanda Ruiz', area:'Región 1 · VE', tienda:'Manglar', sup:'Rosa Delgado', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'12/09/2026' },
-    { ku:'María Fernanda Ruiz', area:'Región 1 · VE', tienda:'Melanie', sup:'Pedro Salas', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'12/09/2026' },
-    { ku:'María Fernanda Ruiz', area:'Región 1 · VE', tienda:'Los Arbolitos', sup:'Fernando Ríos', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'13/09/2026' },
-    { ku:'Carlos Herrera', area:'Región 2 · VE', tienda:'Aluminio', sup:'Gabriela Ortiz', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros'], fecha:'14/09/2026' },
-    { ku:'Carlos Herrera', area:'Región 2 · VE', tienda:'Piedra Luna', sup:'Miguel Ángel Sosa', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'14/09/2026' },
-    { ku:'Carlos Herrera', area:'Región 2 · VE', tienda:'Luis', sup:null, cert:[], fecha:'—' },
-    { ku:'Daniela Gómez', area:'Región 3 · VE', tienda:'Orinoco', sup:'Valentina Cruz', cert:['ADT','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'10/09/2026' },
-    { ku:'Daniela Gómez', area:'Región 3 · VE', tienda:'Araure', sup:'Jorge Peña', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'11/09/2026' },
-    { ku:'Daniela Gómez', area:'Región 3 · VE', tienda:'Nueva Caracas', sup:null, cert:[], fecha:'—' },
-    { ku:'Andrés Molina', area:'Región 1 · CO', tienda:'El Vergel', sup:'Camila Rodríguez', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'09/09/2026' },
-    { ku:'Andrés Molina', area:'Región 1 · CO', tienda:'Titán', sup:'Esteban Vargas', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'09/09/2026' },
-    { ku:'Andrés Molina', area:'Región 1 · CO', tienda:'Avenida del Río', sup:'Natalia Ibarra', cert:['Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'10/09/2026' },
-    { ku:'Laura Jiménez', area:'Región 2 · CO', tienda:'Connecta', sup:'Ricardo Paredes', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'11/09/2026' },
-    { ku:'Laura Jiménez', area:'Región 2 · CO', tienda:'Avenida Cero', sup:'Sofía Martínez', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'11/09/2026' },
-    { ku:'Laura Jiménez', area:'Región 2 · CO', tienda:'Calle 147', sup:'Diego Muñoz', cert:['ADT','Auditoría de Conciliación'], fecha:'12/09/2026' },
+    { ku:'María Fernanda Ruiz', kuCedula:'V-12345678', area:'Región 1 · VE', tienda:'Manglar', sup:'Rosa Delgado', supCedula:'V-19887654', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'12/09/2026' },
+    { ku:'María Fernanda Ruiz', kuCedula:'V-12345678', area:'Región 1 · VE', tienda:'Melanie', sup:'Pedro Salas', supCedula:'V-20112233', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'12/09/2026' },
+    { ku:'María Fernanda Ruiz', kuCedula:'V-12345678', area:'Región 1 · VE', tienda:'Los Arbolitos', sup:'Fernando Ríos', supCedula:'V-18765432', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'13/09/2026' },
+    { ku:'Carlos Herrera', kuCedula:'V-23456789', area:'Región 2 · VE', tienda:'Aluminio', sup:'Gabriela Ortiz', supCedula:'V-21334455', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros'], fecha:'14/09/2026' },
+    { ku:'Carlos Herrera', kuCedula:'V-23456789', area:'Región 2 · VE', tienda:'Piedra Luna', sup:'Miguel Ángel Sosa', supCedula:'V-17998877', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'14/09/2026' },
+    { ku:'Carlos Herrera', kuCedula:'V-23456789', area:'Región 2 · VE', tienda:'Luis', sup:null, supCedula:null, cert:[], fecha:'—' },
+    { ku:'Daniela Gómez', kuCedula:'V-34567890', area:'Región 3 · VE', tienda:'Orinoco', sup:'Valentina Cruz', supCedula:'V-22445566', cert:['ADT','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'10/09/2026' },
+    { ku:'Daniela Gómez', kuCedula:'V-34567890', area:'Región 3 · VE', tienda:'Araure', sup:'Jorge Peña', supCedula:'V-16887766', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'11/09/2026' },
+    { ku:'Daniela Gómez', kuCedula:'V-34567890', area:'Región 3 · VE', tienda:'Nueva Caracas', sup:null, supCedula:null, cert:[], fecha:'—' },
+    { ku:'Andrés Molina', kuCedula:'CC-45678901', area:'Región 1 · CO', tienda:'El Vergel', sup:'Camila Rodríguez', supCedula:'CC-1023456', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'09/09/2026' },
+    { ku:'Andrés Molina', kuCedula:'CC-45678901', area:'Región 1 · CO', tienda:'Titán', sup:'Esteban Vargas', supCedula:'CC-1034567', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'09/09/2026' },
+    { ku:'Andrés Molina', kuCedula:'CC-45678901', area:'Región 1 · CO', tienda:'Avenida del Río', sup:'Natalia Ibarra', supCedula:'CC-1045678', cert:['Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'10/09/2026' },
+    { ku:'Laura Jiménez', kuCedula:'CC-56789012', area:'Región 2 · CO', tienda:'Connecta', sup:'Ricardo Paredes', supCedula:'CC-1056789', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'11/09/2026' },
+    { ku:'Laura Jiménez', kuCedula:'CC-56789012', area:'Región 2 · CO', tienda:'Avenida Cero', sup:'Sofía Martínez', supCedula:'CC-1067890', cert:['ADT','Sobrevuelo','Checklist de Planograma','Validación y Conciliación de Ceros','Auditoría de Conciliación'], fecha:'11/09/2026' },
+    { ku:'Laura Jiménez', kuCedula:'CC-56789012', area:'Región 2 · CO', tienda:'Calle 147', sup:'Diego Muñoz', supCedula:'CC-1078901', cert:['ADT','Auditoría de Conciliación'], fecha:'12/09/2026' },
   ];
 
   let segData = JSON.parse(JSON.stringify(SEG_INITIAL));
   let segLog = [];
+  let segLastMovedIdx = null;
 
   function segInitProcesoSelect(){
     const sel = document.getElementById('seg-proceso');
     sel.innerHTML = SEG_PROCESOS.map(p => `<option value="${p}">${p}</option>`).join('');
     sel.addEventListener('change', renderSeguimiento);
+
+    const areaSel = document.getElementById('seg-f-area');
+    const areas = [...new Set(SEG_INITIAL.map(r => r.area))];
+    areaSel.innerHTML = '<option value="">Todas</option>' + areas.map(a => `<option value="${a}">${a}</option>`).join('');
+
+    ['seg-f-tienda','seg-f-area','seg-f-ku','seg-f-sup'].forEach(id => {
+      document.getElementById(id).addEventListener('input', renderSeguimiento);
+      document.getElementById(id).addEventListener('change', renderSeguimiento);
+    });
   }
 
   function segIsCovered(row, proceso){
     return !!row.sup && row.cert.includes(proceso);
   }
 
+  function segClearFilters(){
+    document.getElementById('seg-f-tienda').value = '';
+    document.getElementById('seg-f-area').value = '';
+    document.getElementById('seg-f-ku').value = '';
+    document.getElementById('seg-f-sup').value = '';
+    renderSeguimiento();
+  }
+
+  function segMatchesFilters(row){
+    const fTienda = document.getElementById('seg-f-tienda').value.trim().toLowerCase();
+    const fArea = document.getElementById('seg-f-area').value;
+    const fKu = document.getElementById('seg-f-ku').value.trim().toLowerCase();
+    const fSup = document.getElementById('seg-f-sup').value.trim().toLowerCase();
+
+    if (fTienda && !row.tienda.toLowerCase().includes(fTienda)) return false;
+    if (fArea && row.area !== fArea) return false;
+    if (fKu && !(row.ku.toLowerCase().includes(fKu) || row.kuCedula.toLowerCase().includes(fKu))) return false;
+    if (fSup){
+      const supStr = ((row.sup||'') + ' ' + (row.supCedula||'')).toLowerCase();
+      if (!supStr.includes(fSup)) return false;
+    }
+    return true;
+  }
+
   function renderSeguimiento(){
     const proceso = document.getElementById('seg-proceso').value;
-    const total = segData.length;
-    const covered = segData.filter(r => segIsCovered(r, proceso));
-    const uncovered = segData.filter(r => !segIsCovered(r, proceso));
+    const visible = segData
+      .map((r, idx) => ({ r, idx }))
+      .filter(({r}) => segMatchesFilters(r));
+
+    const total = visible.length;
+    const covered = visible.filter(({r}) => segIsCovered(r, proceso));
+    const uncovered = visible.filter(({r}) => !segIsCovered(r, proceso));
     const pct = total ? Math.round((covered.length/total)*100) : 0;
 
-    const kus = [...new Set(segData.map(r => r.ku))];
-    const kuFull = kus.filter(ku => segData.filter(r=>r.ku===ku).every(r=>segIsCovered(r, proceso)));
+    const kus = [...new Set(visible.map(({r}) => r.ku))];
+    const kuFull = kus.filter(ku => visible.filter(({r})=>r.ku===ku).every(({r})=>segIsCovered(r, proceso)));
 
     document.getElementById('seg-out-total').textContent = total;
-    document.getElementById('seg-out-cobertura').textContent = pct + '%';
+    document.getElementById('seg-out-cobertura').textContent = total ? pct + '%' : '—';
     document.getElementById('seg-out-alertas').textContent = uncovered.length;
-    document.getElementById('seg-out-kucompleto').textContent = kuFull.length + ' / ' + kus.length;
-
-    const alertsWrap = document.getElementById('seg-alerts-wrap');
-    if (uncovered.length === 0){
-      alertsWrap.innerHTML = '';
-    } else {
-      alertsWrap.innerHTML = uncovered.map(r => `
-        <div class="seg-alert">
-          <div class="seg-alert-ico">!</div>
-          <div class="seg-alert-text">
-            <b>Tienda ${r.tienda}</b> (${r.area}, KU: ${r.ku}) no tiene supervisor certificado en <b>${proceso}</b>.
-            ${r.ku} debe recertificar.
-          </div>
-        </div>
-      `).join('');
-    }
+    document.getElementById('seg-out-kucompleto').textContent = kus.length ? (kuFull.length + ' / ' + kus.length) : '—';
 
     const body = document.getElementById('seg-table-body');
-    body.innerHTML = segData.map((r, idx) => {
-      const ok = segIsCovered(r, proceso);
-      return `
-        <tr class="${ok ? '' : 'seg-row-uncovered'}">
-          <td class="seg-ku">${r.ku}<br><span style="font-weight:400;color:var(--ink-soft);font-size:10px;">${r.area}</span></td>
-          <td>${r.tienda}</td>
-          <td>${r.sup ? r.sup : '<span class="seg-vacante">Vacante</span>'}</td>
-          <td>${ok
-              ? '<span class="seg-badge ok">✔ Cubierta</span>'
-              : '<span class="seg-badge bad">⚠ Sin cobertura</span>'}</td>
-          <td>${r.sup ? r.fecha : '—'}</td>
-          <td>${ok ? '' : `<button class="seg-recert-btn" onclick="segRecertify(${idx})">Certificar</button>`}</td>
-        </tr>
-      `;
-    }).join('');
+    if (visible.length === 0){
+      body.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--ink-soft); font-size:12px; padding:18px;">Ningún registro coincide con los filtros aplicados.</td></tr>';
+    } else {
+      body.innerHTML = visible.map(({r, idx}) => {
+        const ok = segIsCovered(r, proceso);
+        const flash = idx === segLastMovedIdx ? ' seg-alert-flash' : '';
+        return `
+          <tr class="${ok ? '' : 'seg-row-uncovered'}${flash}">
+            <td class="seg-ku">${r.ku}<br><span style="font-weight:400;color:var(--ink-soft);font-size:10px;">${r.area} · ${r.kuCedula}</span></td>
+            <td>${r.tienda}</td>
+            <td>${r.sup ? `${r.sup}<br><span style="font-weight:400;color:var(--ink-soft);font-size:10px;">${r.supCedula}</span>` : '<span class="seg-vacante">Vacante</span>'}</td>
+            <td>${ok
+                ? '<span class="seg-badge ok">✔ Cubierta</span>'
+                : '<span class="seg-badge bad">⚠ Sin cobertura</span>'}</td>
+            <td>${r.sup ? r.fecha : '—'}</td>
+            <td>${ok ? '' : `<button class="seg-recert-btn" onclick="segRecertify(${idx})">Certificar</button>`}</td>
+          </tr>
+        `;
+      }).join('');
+    }
 
     const logWrap = document.getElementById('seg-log-wrap');
     if (segLog.length === 0){
@@ -873,29 +911,39 @@
       return;
     }
     const origin = candidates[Math.floor(Math.random()*candidates.length)];
+    const originIdx = segData.indexOf(origin);
     const others = segData.filter(r => r !== origin);
     const destino = others[Math.floor(Math.random()*others.length)];
     const supName = origin.sup;
 
     segLog.unshift(`🔁 <b>${supName}</b> se movió de <b>${origin.tienda}</b> a <b>${destino.tienda}</b>. ${origin.tienda} quedó sin supervisor certificado en ${proceso}.`);
     origin.sup = null;
+    origin.supCedula = null;
     origin.cert = [];
     origin.fecha = '—';
+    segLastMovedIdx = originIdx;
 
     renderSeguimiento();
-    window.scrollTo({top: document.getElementById('seg-alerts-wrap').offsetTop - 100, behavior:'smooth'});
+    document.querySelector('.seg-table-wrap').scrollIntoView({behavior:'smooth', block:'center'});
   }
 
   function segRecertify(idx){
     const proceso = document.getElementById('seg-proceso').value;
     const row = segData[idx];
-    const nombres = ['Juan Torres','Ana Beltrán','Luis Ramírez','Patricia Gil','Óscar Medina','Carmen Loyo'];
+    const nombres = [
+      {n:'Juan Torres', c:'V-24556677'}, {n:'Ana Beltrán', c:'V-25667788'},
+      {n:'Luis Ramírez', c:'CC-1089012'}, {n:'Patricia Gil', c:'CC-1090123'},
+      {n:'Óscar Medina', c:'V-26778899'}, {n:'Carmen Loyo', c:'V-27889900'}
+    ];
     if (!row.sup){
-      row.sup = nombres[Math.floor(Math.random()*nombres.length)];
+      const pick = nombres[Math.floor(Math.random()*nombres.length)];
+      row.sup = pick.n;
+      row.supCedula = pick.c;
       row.cert = [];
     }
     if (!row.cert.includes(proceso)) row.cert.push(proceso);
     row.fecha = 'Hoy';
+    segLastMovedIdx = null;
     segLog.unshift(`✅ El Key User <b>${row.ku}</b> certificó a <b>${row.sup}</b> en <b>${row.tienda}</b> para ${proceso}.`);
     renderSeguimiento();
   }
@@ -903,7 +951,8 @@
   function resetSeguimiento(){
     segData = JSON.parse(JSON.stringify(SEG_INITIAL));
     segLog = [];
-    renderSeguimiento();
+    segLastMovedIdx = null;
+    segClearFilters();
   }
 
   segInitProcesoSelect();
