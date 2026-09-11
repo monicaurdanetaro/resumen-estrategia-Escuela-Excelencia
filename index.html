@@ -117,6 +117,10 @@
 
   /* role detail cards */
   .role-grid-mini{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:20px 0 6px;}
+  .cascade-mini-3{grid-template-columns:repeat(3,1fr) !important; max-width:420px; margin:6px auto 6px !important;}
+  .role-grid-mini-3{grid-template-columns:repeat(3,1fr) !important;}
+  .mini-callout{font-size:11.5px; color:var(--ink-soft); background:var(--paper-deep); border-radius:10px; padding:10px 13px;}
+  .mini-callout b{color:var(--ink);}
   .role-mini-card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 15px; box-shadow:var(--shadow);}
   .role-mini-card .rtag{font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:6px;}
   .role-mini-card h5{font-family:'Poppins'; font-size:14px; margin-bottom:8px; color:var(--ink);}
@@ -180,6 +184,8 @@
     .dual-mini{grid-template-columns:1fr;}
     .cascade-mini{grid-template-columns:repeat(2,1fr); gap:16px;}
     .role-grid-mini{grid-template-columns:1fr 1fr;}
+    .cascade-mini-3{grid-template-columns:1fr !important;}
+    .role-grid-mini-3{grid-template-columns:1fr !important;}
     .fases-mini{grid-template-columns:1fr;}
     .pflow{grid-template-columns:1fr;}
     .road-mini{flex-direction:column;}
@@ -317,71 +323,64 @@
   <div class="panel" style="margin-bottom:18px;">
     <div class="panel-title">El cómo</div>
     <h3>Roles y fases de certificación</h3>
-    <p style="font-size:12.8px; color:var(--ink-soft); margin-bottom:16px;">La idea general: <b>Key Users expertos por área y proceso</b> forman a grupos pequeños directamente en las tiendas que tienen asignadas, y certifican que cada colaborador realmente lo ejecuta — no solo que lo escuchó.</p>
-    <div class="cascade-mini">
-      <div class="cmini"><div class="circ">C</div><div class="cname">Capacitación</div><div class="csub">diseño y pedagogía</div></div>
+    <p style="font-size:12.8px; color:var(--ink-soft); margin-bottom:16px;">La idea general: el <b>Super Key User</b> forma de manera general y conectada a los Key Users; cada <b>Key User</b> certifica presencialmente al Gerente de Tienda o a un supervisor en sus tiendas asignadas, garantizando que siempre haya al menos uno certificado — y ese supervisor forma al resto de su equipo.</p>
+    <div class="cascade-mini cascade-mini-3">
       <div class="cmini"><div class="circ">SK</div><div class="cname">Super Key User</div><div class="csub">GA o experto en el proceso</div></div>
-      <div class="cmini"><div class="circ">KU</div><div class="cname">Key User de Zona</div><div class="csub"><span id="sync-gtPorKU">3</span> GT por área</div></div>
-      <div class="cmini"><div class="circ">GT</div><div class="cname">Gerente de Tienda</div><div class="csub">certificado, 1 por tienda</div></div>
-      <div class="cmini"><div class="circ">👤</div><div class="cname">Colaborador</div><div class="csub">formado por su GT</div></div>
+      <div class="cmini"><div class="circ">KU</div><div class="cname">Key User de Zona</div><div class="csub"><span id="sync-gtPorKU">3</span> tiendas por área</div></div>
+      <div class="cmini"><div class="circ">GT</div><div class="cname">GT o supervisor</div><div class="csub">certificado, ≥1 por tienda</div></div>
     </div>
-    <div class="role-grid-mini">
+    <div class="role-grid-mini role-grid-mini-3">
       <div class="role-mini-card">
-        <div class="rtag">Diseño</div>
-        <h5>Capacitación</h5>
-        <p>Prioriza procesos junto a Auditoría y Operaciones, construye el kit de sesión y evaluación, y forma en pedagogía a los Key Users de Zona.</p>
-        <div class="obj">Objetivo: que el sistema exista y se sostenga en el tiempo.</div>
-      </div>
-      <div class="role-mini-card">
-        <div class="rtag">Dueño del proceso</div>
+        <div class="rtag">Formación general</div>
         <h5>Super Key User</h5>
-        <p>Experto real del proceso crítico. Certifica el contenido y enseña el proceso a fondo a los Key Users de Zona, junto con los errores más comunes vistos en campo.</p>
-        <div class="obj">Objetivo: que el contenido sea 100% fiel al proceso real.</div>
+        <p>Da una formación teórica general y conectada (no presencial en tienda) a todos los Key Users a la vez, con los errores más comunes del proceso.</p>
+        <div class="obj">Objetivo: contenido 100% fiel al proceso, transmitido de forma eficiente.</div>
       </div>
       <div class="role-mini-card">
-        <div class="rtag">Formación</div>
+        <div class="rtag">Certificación en tienda</div>
         <h5>Key User de Zona</h5>
-        <p>Va físicamente a sus tiendas asignadas (≈3). Certifica de forma individual a cada Gerente de Tienda, con evaluación teórica y práctica.</p>
-        <div class="obj">Objetivo: instalar la habilidad en quien puede sostenerla.</div>
+        <p>Certifica de forma individual al Gerente de Tienda o a un supervisor de cada una de sus tiendas asignadas (≈3), con evaluación teórica y práctica.</p>
+        <div class="obj">Objetivo: garantizar que siempre haya al menos un supervisor certificado por tienda.</div>
       </div>
       <div class="role-mini-card">
         <div class="rtag">Multiplicación</div>
-        <h5>Gerente de Tienda</h5>
+        <h5>GT o supervisor</h5>
         <p>Ya certificado por el Key User, baja la formación al resto de su equipo y responde por su ejecución correcta.</p>
         <div class="obj">Objetivo: que la formación sea sostenible, no dependiente de una visita.</div>
-      </div>
-      <div class="role-mini-card">
-        <div class="rtag">Ejecución</div>
-        <h5>Colaborador</h5>
-        <p>Recibe la formación de su GT, se certifica con evaluación teórica y práctica, y recibe refuerzo espaciado vía Academia Farmatodo.</p>
-        <div class="obj">Objetivo: ejecutar el proceso correctamente, no solo aprobarlo.</div>
       </div>
     </div>
     <div class="fases-mini">
       <div class="fmini">
-        <div class="fnum">01 · Formación</div>
-        <h4>Certificación de facilitadores</h4>
-        <p>Super Key User + Capacitación forman al Key User de Zona.</p>
+        <div class="fnum">01 · Formación general</div>
+        <h4>SK forma a los Key Users</h4>
+        <p>Sesión conectada, general para todos los Key Users a la vez.</p>
         <div class="fcert">✔ Teórica</div>
       </div>
       <div class="fmini">
-        <div class="fnum">02 · Certificación GT</div>
-        <h4>KU certifica al Gerente de Tienda</h4>
-        <p>Individual por GT: ≈<span id="sync-teorica">18</span> min teórica + ≈<span id="sync-practica">38</span> min práctica, por proceso.</p>
+        <div class="fnum">02 · Certificación en tienda</div>
+        <h4>KU certifica al GT o supervisor</h4>
+        <p>Individual: ≈<span id="sync-teorica">18</span> min teórica + ≈<span id="sync-practica">38</span> min práctica, por proceso.</p>
         <div class="fcert">✔ Teórica · ✔ Práctica</div>
       </div>
       <div class="fmini">
         <div class="fnum">03 · Cascada interna</div>
-        <h4>GT forma a su equipo</h4>
+        <h4>Supervisor forma a su equipo</h4>
         <p>Microgrupos, dentro del ritmo normal de la tienda.</p>
         <div class="fcert">✔ Teórica · ✔ Práctica</div>
       </div>
       <div class="fmini">
         <div class="fnum">04 · Sostenimiento</div>
         <h4>Refuerzo espaciado</h4>
-        <p>Píldoras + dashboard de seguimiento por movimientos de GT.</p>
+        <p>Píldoras + dashboard de seguimiento por movimientos de personal.</p>
         <div class="fcert">✔ Teórica · ✔ Práctica</div>
       </div>
+    </div>
+
+    <div class="mini-callout" style="margin-top:14px;">
+      <b>⏱ Inversión de tiempo:</b> certificar a un supervisor en un proceso toma ≈<span id="sync-porGTproceso">56</span> min. Para un Key User con sus ≈<span id="sync-gtPorKU3">3</span> tiendas, eso es ≈<span id="sync-porKUproceso">2.8</span> h por proceso — ver el detalle en "Calculadora de tiempo".
+    </div>
+    <div class="mini-callout" style="margin-top:8px;">
+      <b>? ¿Cuántos procesos al año?</b> Estimado entre 4 y 8 procesos críticos por año fiscal (≈1–2 por trimestre) — el número final depende de lo que Auditoría identifique como prioritario, no es una meta fija de Capacitación.
     </div>
   </div>
 
@@ -600,9 +599,15 @@
     const syncTeorica = document.getElementById('sync-teorica');
     const syncPractica = document.getElementById('sync-practica');
     const syncGT = document.getElementById('sync-gtPorKU');
+    const syncGT3 = document.getElementById('sync-gtPorKU3');
+    const syncPorGTproceso = document.getElementById('sync-porGTproceso');
+    const syncPorKUproceso = document.getElementById('sync-porKUproceso');
     if (syncTeorica) syncTeorica.textContent = calcFmtNum(teorica);
     if (syncPractica) syncPractica.textContent = calcFmtNum(practica);
     if (syncGT) syncGT.textContent = calcFmtNum(gtPorKU);
+    if (syncGT3) syncGT3.textContent = calcFmtNum(gtPorKU);
+    if (syncPorGTproceso) syncPorGTproceso.textContent = calcFmtNum(porProceso);
+    if (syncPorKUproceso) syncPorKUproceso.textContent = calcFmtH(porKUproceso);
   }
 
   function resetCalcDefaults(){
